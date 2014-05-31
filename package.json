@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/anastasia/pandocker",
   "dependencies": {
-    "express": "^4.4.0"
+    "body-parser": "^1.1.2",
+    "errorhandler": "^1.0.1",
+    "express": "^4.4.0",
+    "method-override": "^1.0.0"
   }
 }
