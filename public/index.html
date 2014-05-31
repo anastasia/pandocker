@@ -3,39 +3,31 @@
 <head>
   <meta charset=utf-8>
   <title>Pandocker - dock your academic papers here</title>
+  <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:400,500,700,400italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-  <!-- MAIN CONTINER -->
-  <div>
+  <div class="container">
+    <!-- HEADER -->
+    <div class="pd-nav">
+      <div class="pd-nav-left">Beta</div>
+    </div>
     <!-- TITLE -->
     <div class="pd-title">
+      <div class="pd-title-subtext">convert your files</div>
       <div class="pd-title-main">PANDOCKER</div>
-      <br>
-      <div class="pd-title-subtext">dock your academic papers here</div>
     </div>
-    <!-- DESCRIPTION -->
-    <div class="pd-description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.
+    <div ui-view></div>
 
-      <span>
-        Need some help? check out the
-        <a href="http://johnmacfarlane.net/pandoc/faqs.html"> Pandoc FAQs </a>
-        .
-      </span>
+    <!-- FOOTER -->
+    <div class="pd-footer">
+      <div class="pd-footer-left">
+      <a href="www.github.com/anastasia/pandoc">github : pandoc</a>
+      </div>
     </div>
-    <!-- INPUT -->
-    <div class="pd-input">
-      <input type="file" name="somename" size="chars">
-    </div>
-    <!-- FILE-OPTIONS -->
-    <ul class="pd-file-options" ng-repeat="format in formats">
-      <li>{{format}}</li>
-    </ul>
   </div>
-
 </body>
 <script src='lib/angular/angular.min.js'></script>
 <script src='lib/angular-ui-router/release/angular-ui-router.min.js'></script>

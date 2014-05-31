@@ -1,31 +1,30 @@
 angular.module('pd', ['ui.router'])
-.config(function($stateProvider){
+.config(function($stateProvider, $urlRouterProvider){
+  $urlRouterProvider.otherwise("/");
+
   $stateProvider
     .state('upload', {
       url: '',
       controller: 'upload',
-      template: 'features/upload/controller.js',
+      templateUrl: 'features/upload/partial.html',
     })
-    .state('download', {
-      url: 'download',
-      controller: 'download',
-      template: '',
-    })
+
 })
+
 .run(function($rootScope) {
   $rootScope.formats = [
-    "XHTML", "HTML5", "HTML slideshows with Slidy",
+    ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
     "reveal.js", "Slideous", "S5", "DZSlides",
-    "Microsoft Word docx", "OpenOffice/LibreOffice ODT",
-    "OpenDocument XML", "EPUB v2", "EPUB v3",
-    "FictionBook2", "DocBook", "GNU TexInfo",
+    ".docx", ".doc", ".odt", ".xml", ".epub (v2)",
+    ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
     "Groff man pages", "Haddock markup", "InDesign ICML",
-    "OPML", "LaTeX", "ConTeXt", "LaTeX Beamer slides",
-    "via LaTeX", "Markdown", "reStructuredText",
+    ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
+    ".pdf", ".md", ".rst",
     "AsciiDoc", "MediaWiki markup", "Emacs Org-Mode",
-    "Textile", "Can be written in lua",
-  ]
+    "Textile"
+  ];
 })
-.controller('upload', function($scope){
 
+.controller('upload', function($scope, $rootScope){
+  $scope.formats = $rootScope.formats;
 })
