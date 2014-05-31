@@ -1,6 +1,7 @@
 body {
   font-family: 'Alegreya Sans', sans-serif;
-  letter-spacing: 0.1em;
+  font-size: 25px;
+  letter-spacing: 0.05em;
   background-color: #DDD;
 }
 
@@ -16,13 +17,14 @@ body {
 
 .pd-nav-left {
   color: #FFF;
+  letter-spacing: 0.1em;
   padding: 16px 25px;
   font-size: 26px;
   font-weight: 400;
 }
 
 .pd-title {
-  padding: 170px;
+  padding: 170px 0px 10px;
   text-align:center;
 }
 
