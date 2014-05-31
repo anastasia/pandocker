@@ -1,0 +1,22 @@
+{
+  "name": "pandocker",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/anastasia/pandocker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anastasia/pandocker/issues"
+  },
+  "homepage": "https://github.com/anastasia/pandocker",
+  "dependencies": {
+    "express": "^4.4.0"
+  }
+}
