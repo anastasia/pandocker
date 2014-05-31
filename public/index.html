@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
   <!-- MAIN CONTINER -->
   <div ui-view>
@@ -30,45 +31,13 @@
       <input type="file" name="somename" size="chars">
     </div>
     <!-- FILE-OPTIONS -->
-    <div class="pd-file-options">
-      <div class="pd-file-options-html">
-        <ul>
-          <li>XHTML</li>
-          <li>HTML5</li>
-          <li>HTML slideshows with Slidy</li>
-          <li>reveal.js</li>
-          <li>Slideous</li>
-          <li>S5</li>
-          <li>DZSlides</li>
-          <li>Microsoft Word docx</li>
-          <li>OpenOffice/LibreOffice ODT</li>
-          <li>OpenDocument XML</li>
-          <li>EPUB v2</li>
-          <li>EPUB v3</li>
-          <li>FictionBook2</li>
-          <li>DocBook</li>
-          <li>GNU TexInfo</li>
-          <li>Groff man pages</li>
-          <li>Haddock markup</li>
-          <li>InDesign ICML</li>
-          <li>OPML</li>
-          <li>LaTeX</li>
-          <li>ConTeXt</li>
-          <li>LaTeX Beamer slides</li>
-          <li>via LaTeX</li>
-          <li>Markdown</li>
-          <li>reStructuredText</li>
-          <li>AsciiDoc</li>
-          <li>MediaWiki markup</li>
-          <li>Emacs Org-Mode</li>
-          <li>Textile</li>
-          <li>Can be written in lua</li>
-        </ul>
-      </div>
-    </div>
+    <ul class="pd-file-options" ng-repeat="format in formats">
+      <li>{{format}}</li>
+    </ul>
   </div>
 
 </body>
 <script src='lib/angular/angular.min.js'></script>
+<script src='lib/angular-ui-router/release/angular-ui-router.min.js'></script>
 <script src='app.js'></script>
 </html>
