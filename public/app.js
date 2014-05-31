@@ -1,12 +1,12 @@
-angular.module('pd', ['ui-router'])
+angular.module('pd', ['ui.router'])
 .config(function($stateProvider){
   $stateProvider
-    .when('upload', {
+    .state('upload', {
       url: '',
       controller: 'upload',
-      template: '',
+      template: 'features/upload/controller.js',
     })
-    .when('download', {
+    .state('download', {
       url: 'download',
       controller: 'download',
       template: '',
@@ -26,9 +26,6 @@ angular.module('pd', ['ui-router'])
     "Textile", "Can be written in lua",
   ]
 })
-.controller('upload', function(){
-
-})
-.controller('download', function(){
+.controller('upload', function($scope){
 
 })
