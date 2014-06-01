@@ -1,4 +1,4 @@
-angular.module('pd', ['ui.router'])
+angular.module('pd', ['ui.router', 'angularFileUpload'])
 .config(function($stateProvider, $urlRouterProvider){
   $urlRouterProvider.otherwise("/");
 
@@ -25,6 +25,7 @@ angular.module('pd', ['ui.router'])
   ];
 })
 
-.controller('upload', function($scope, $rootScope){
+.controller('upload', function($scope, $rootScope, $fileUploader){
   $scope.formats = $rootScope.formats;
+  console.log($fileUploader.queue);
 })

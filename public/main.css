@@ -38,10 +38,20 @@ body {
   padding-top: 1px;
   letter-spacing: 0.16em;
 }
+.pd-upload {
+  width: 575px;
+  margin:auto;
+}
 
 .pd-upload-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 200;
-  padding-top: 1px;
-  letter-spacing: 0.16em;
+  padding-top: 6px;
+  letter-spacing: 0.11em;
+}
+
+input[type=button] {
+    width: 1px;
+    border: 0px;
+    visibility: hidden;
 }
