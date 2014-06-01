@@ -1,7 +1,8 @@
-var express         = require("express");
-var app             = express();
-var port            = 3000;
+var express       = require("express");
+var app           = express();
+var port          = 3000;
 
+var async    = require('async');
 var jandoc   = require('jandoc');
 var fs       = require('fs');
 var targz    = require('tar.gz');
@@ -31,10 +32,15 @@ app.post('/upload', function(req, res) {
        throw err
     } else {
       fileToSendBack = processFile(filePath, data, extensions, fileName);
+      res.send('oook then ', fileToSendBack)
     }
   });
-  res.send('oook then')
 });
+
+var jandocCb = function(str, cb) {
+
+}
+
 
 var processFile = function(path, data, extensions, name) {
   fs.writeFile(path, data, function(err) {
@@ -42,31 +48,31 @@ var processFile = function(path, data, extensions, name) {
       console.log(err)
     } else {
       extensions = JSON.parse(extensions)
-      console.log('in here! ', extensions)
-      for(var i = 0; i < extensions.length; i++) {
-        jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+extensions[i]);
-        // var oldFile = path.split('.')[0];
-        // console.log('path ',path)
-        // fs.rename(path, name+'.'+extensions[i]);
-      }
-      var compress = new targz().compress(
-                                  output, name+'.tar.gz', function(err){
-                                  if(err){
-                                    throw err;
-                                  } else {
-                                    // deleteDirectories();
-                                    return name+'.tar.gz';
-                                  }
-                                });
+      async.each(extensions, function(val, cb){
+        jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+ val, cb);
+      }, function(err) {
+          if( err ) {
+            console.error('A file failed to process');
+          } else {
+            new targz()
+            .compress(output, name+'.tar.gz', function(err){
+              if(err) { console.error(err) }
+              else {
+                deleteDirectories();
+                return name+'.tar.gz'
+              }
+            });
+          }
+      });
+
     }
   });
 };
 
 var deleteDirectories = function() {
-  console.log('WHOA THERE')
   rmdir(__dirname+'/temp', function(err) {
     if(err) {
-      console.log(err)
+      console.error(err)
     }
     console.log('temp dir removed!');
   });
