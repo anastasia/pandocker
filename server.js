@@ -2,10 +2,10 @@ var express       = require("express");
 var app           = express();
 var port          = 3000;
 
+var targz    = require('tar.gz');
 var async    = require('async');
 var jandoc   = require('jandoc');
 var fs       = require('fs');
-var targz    = require('tar.gz');
 var mkdirp   = require('mkdirp');
 var rmdir    = require('rimraf');
 
@@ -14,12 +14,20 @@ app.use(express.static(__dirname + '/public'));
 
 app.listen(port);
 
-var output = __dirname + '/temp/output';
+var temp   = __dirname + '/temp';
+var output = __dirname + '/temp/files';
 
-mkdirp(output, function (err) {
-  if (err) console.error(err)
-  else console.log('output!')
-});
+makeDirStructure = function(cb) {
+  mkdirp(temp, function (err) {
+    if (err) console.error(err)
+    else {
+      mkdirp(output, function (err) {
+        if (err) console.error(err)
+      });
+    }
+  });
+  cb();
+}
 
 app.post('/upload', function(req, res) {
 
@@ -27,29 +35,43 @@ app.post('/upload', function(req, res) {
   var fileName     = req.files.files.name.split('.')[0];
   var extensions   = req.body.data;
 
-  fs.readFile(filePath, function(err, data){
-    if(err){
-       throw err
+  makeDirStructure(function(err){
+    if(err) {
+      console.error(err)
     } else {
-      fileToSendBack = processFile(filePath, data, extensions, fileName);
-      res.send('oook then ', fileToSendBack)
+      console.log('file structure created')
+      fs.readFile(filePath, function(err, data){
+        if(err){
+          console.error(err);
+        } else {
+          processFile(filePath, data, extensions, fileName, function(){
+            res.send('success')
+          });
+        }
+      });
     }
   });
 });
 
-var jandocCb = function(str, cb) {
-
-}
-
-
-var processFile = function(path, data, extensions, name) {
+var processFile = function(path, data, extensions, name, cb) {
   fs.writeFile(path, data, function(err) {
     if(err) {
-      console.log(err)
+      console.log(err);
     } else {
-      extensions = JSON.parse(extensions)
-      async.each(extensions, function(val, cb){
-        jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+ val, cb);
+
+      extensions  = JSON.parse(extensions)
+      var arr     = path.split('/');
+      var oldName = arr[arr.length-1].split('.')[0]; // string created by fs
+
+      async.each(extensions, function(val){
+        jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+ val, function(err){
+          fs.rename(output+'/'+oldName+'.'+val, output+'/'+name+'.'+val, function(err){
+            if (err) {
+              console.error(err);
+            }
+          });
+          console.log('getting in here!')
+        });
       }, function(err) {
           if( err ) {
             console.error('A file failed to process');
@@ -64,7 +86,7 @@ var processFile = function(path, data, extensions, name) {
             });
           }
       });
-
+      cb();
     }
   });
 };
