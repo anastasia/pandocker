@@ -63,27 +63,28 @@ var processFile = function(path, data, extensions, name, cb) {
       var arr     = path.split('/');
       var oldName = arr[arr.length-1].split('.')[0]; // string created by fs
 
-      async.each(extensions, function(val){
+      async.each(extensions, function(val, cb){
         jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+ val, function(err){
-          fs.rename(output+'/'+oldName+'.'+val, output+'/'+name+'.'+val, function(err){
-            if (err) {
-              console.error(err);
-            }
-          });
-          console.log('getting in here!')
+          fs.rename(output+'/'+oldName+'.'+val, output+'/'+name+'.'+val, cb);
         });
       }, function(err) {
+          console.log('c\'mon!!!')
           if( err ) {
             console.error('A file failed to process');
           } else {
-            new targz()
-            .compress(output, name+'.tar.gz', function(err){
-              if(err) { console.error(err) }
-              else {
-                deleteDirectories();
-                return name+'.tar.gz'
+            console.log('almost there')
+            new targz().compress(
+              output,
+              name+'.tar.gz',
+              function(err){
+                console.log('gettin\' it')
+                if(err) { console.error(err) }
+                else {
+                  // deleteDirectories();
+                  return name+'.tar.gz'
+                }
               }
-            });
+            );
           }
       });
       cb();
