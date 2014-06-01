@@ -13,13 +13,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.listen(port);
 
-var input  = __dirname + '/temp/input';
 var output = __dirname + '/temp/output';
-
-mkdirp(input, function (err) {
-  if (err) console.error(err)
-  else console.log('input!')
-});
 
 mkdirp(output, function (err) {
   if (err) console.error(err)
