@@ -1,10 +1,12 @@
-<!-- INPUT -->
-<div><em>upload your file from a computer</em></div>
-<div class="pd-input">
-  <input type="file" name="somename" size="chars">
+<div class="pd-upload">
+  <div class="pd-upload-title"><em>upload your file from a computer</em></div>
+  <!-- INPUT -->
+  <div class="pd-input">
+    <input type="file" name="somename" size="chars">
+  </div>
+  <!-- FILE-OPTIONS -->
+  <div>choose your format</div>
+  <ul class="pd-file-options" ng-repeat="format in formats">
+    <li>{{format}}</li>
+  </ul>
 </div>
-<!-- FILE-OPTIONS -->
-<div>choose your format</div>
-<ul class="pd-file-options" ng-repeat="format in formats">
-  <li>{{format}}</li>
-</ul>

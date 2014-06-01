@@ -38,3 +38,10 @@ body {
   padding-top: 1px;
   letter-spacing: 0.16em;
 }
+
+.pd-upload-title {
+  font-size: 20px;
+  font-weight: 200;
+  padding-top: 1px;
+  letter-spacing: 0.16em;
+}
