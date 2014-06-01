@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,11 @@
   "dependencies": {
     "body-parser": "^1.1.2",
     "errorhandler": "^1.0.1",
-    "express": "^4.4.0",
-    "method-override": "^1.0.0"
+    "express": "3.x",
+    "jandoc": "git://github.com/anastasia/jandoc.git",
+    "method-override": "^1.0.0",
+    "mkdirp": "^0.5.0",
+    "rimraf": "^2.2.8",
+    "tar.gz": "^0.1.1"
   }
 }
