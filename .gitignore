@@ -1,2 +1,4 @@
 node_modules
 cc
+*.docx
+*.tar.gz
