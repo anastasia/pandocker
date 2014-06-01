@@ -42,27 +42,32 @@ var processFile = function(path, data, extensions, name) {
       console.log(err)
     } else {
       extensions = JSON.parse(extensions)
+      console.log('in here! ', extensions)
       for(var i = 0; i < extensions.length; i++) {
-        jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+extensions[i]); // write each file in output directory
+        jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+extensions[i]);
+        // var oldFile = path.split('.')[0];
+        // console.log('path ',path)
+        // fs.rename(path, name+'.'+extensions[i]);
       }
-
       var compress = new targz().compress(
                                   output, name+'.tar.gz', function(err){
-                                  if(err) throw err;
-                                  return name+'.tar.gz';
+                                  if(err){
+                                    throw err;
+                                  } else {
+                                    // deleteDirectories();
+                                    return name+'.tar.gz';
+                                  }
                                 });
     }
   });
-  deleteDirectories();
 };
 
 var deleteDirectories = function() {
   console.log('WHOA THERE')
-
   rmdir(__dirname+'/temp', function(err) {
-    if(err) throw err
-    else {
-      console.log('temp dir removed!');
+    if(err) {
+      console.log(err)
     }
+    console.log('temp dir removed!');
   });
 }
