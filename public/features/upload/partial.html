@@ -1,11 +1,7 @@
 <div class="pd-upload">
   <div class="pd-upload-title"><em>upload your file from your computer</em></div>
   <!-- INPUT -->
-  <form novalidate class="pd-upload-form">
-    <input type="file" ng-file-select="" ng-model="inputFile" />
-    <div>{{inputFile.value}}</div>
-    <button>browse</button>
-  </form>
+  <div pd-file-upload='fileProperties'></div>
   <!-- FILE-OPTIONS -->
   <div>choose your format</div>
   <ul class="pd-file-options" ng-repeat="format in formats">

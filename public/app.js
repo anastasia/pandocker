@@ -25,7 +25,14 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   ];
 })
 
+.directive('pdFileUpload', function(){
+  return {
+    restrict: 'A',
+    templateUrl: 'features/upload/pd-file-upload.html',
+  };
+})
+
 .controller('upload', function($scope, $rootScope, $fileUploader){
   $scope.formats = $rootScope.formats;
-  console.log($fileUploader.queue);
+  console.log($fileUploader.queue)
 })
