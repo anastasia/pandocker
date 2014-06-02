@@ -21,10 +21,11 @@ app.post('/upload', function(req, res) {
   var filePath     = req.files.files.path;
   var fileName     = req.files.files.name.split('.')[0];
   var extensions   = req.body.data;
+  var tmpDirectory = temp + '/' + fileName;
 
   async.waterfall([
     function(cb){
-      mkdirp(output, cb);
+      mkdirp(tmpDirectory, cb);
 
     }, function(made, cb){
       fs.readFile(filePath, cb);
@@ -45,39 +46,33 @@ app.post('/upload', function(req, res) {
 
 var processFile = function(path, data, extensions, name, cb) {
   fs.writeFile(path, data, function(err) {
-    if(err) {
-      console.log(err);
-    } else {
-
-      extensions  = JSON.parse(extensions)
+    if (err) { console.log(err); }
+    else {
+      extensions  = JSON.parse(extensions);
       var arr     = path.split('/');
       var oldName = arr[arr.length-1].split('.')[0]; // string created by fs
 
       async.each(extensions, function(val, cb){
-        jandoc.cmd('-d '+path+ ' -o ' + output +' --write '+ val, function(err){
-          fs.rename(output+'/'+oldName+'.'+val, output+'/'+name+'.'+val, cb);
-        });
+        jandoc.cmd( '-d ' + path + ' -o ' + output + ' --write ' + val,
+                    function(err){
+                      fs.rename(output + '/' + oldName + '.' + val,
+                                output + '/' + name    + '.' + val,
+                                cb);
+                    }
+        );
       }, function(err) {
-          console.log('c\'mon!!!')
-          if( err ) {
-            console.error('A file failed to process');
-          } else {
-            console.log('almost there')
+          if( err ) { console.error('A file failed to process'); }
+          else {
             new targz().compress(
               output,
               name+'.tar.gz',
               function(err){
-                console.log('gettin\' it')
-                if(err) { console.error(err) }
-                else {
-                  // deleteDirectories();
-                  return name+'.tar.gz'
-                }
+                deleteDirectories();
+                cb(err, name+'.tar.gz');
               }
             );
           }
       });
-      cb();
     }
   });
 };
