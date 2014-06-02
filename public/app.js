@@ -28,11 +28,44 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 .directive('pdFileUpload', function(){
   return {
     restrict: 'A',
-    templateUrl: 'features/upload/pd-file-upload.html',
+    scope: {
+      filename : '='
+    },
+    template: '<div id="test">{{filename || "somefile"}}</div>' +
+    '<input type="file" id="myFile"/>'+ 
+    '<button id="fileButton">{{buttonName}}</button>',
+    link : function($scope, $element, scope, element, attributes) {
+            $element.bind('change', function() {
+              $scope.filename = 'hi there';
+              console.log($scope, scope)
+              console.log("change !");
+            });
+            $element.on('change', function() {
+              $scope.filename = 'woo';
+
+            })
+        },
+    // controller: function($scope, $element){
+    //   $scope.buttonName = 'browse';
+    //   $scope.fileNameChanged = function(){
+    //     $scope.filename = document.getElementById('myFile').value;
+    //     $scope.$broadcast('filenameChanged')
+    //     console.log($scope.filename)
+    //   }
+
+    //   $element.on('change', function(e){
+    //     $scope.filename = document.getElementById('myFile').value;
+    //     console.log('changing name!')
+    //     $scope.$emit('filenameChanged');
+    //   })
+    // },
   };
 })
 
 .controller('upload', function($scope, $rootScope, $fileUploader){
   $scope.formats = $rootScope.formats;
-  console.log($fileUploader.queue)
+  $scope.$on('filenameChanged', function(e) {
+    $scope.filename = document.getElementById('myFile').value;
+  });
 })
+        // $scope.buttonName = 'upload';
