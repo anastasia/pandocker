@@ -15,19 +15,21 @@ app.use(express.static(__dirname + '/public'));
 app.listen(port);
 
 var temp   = __dirname + '/temp';
-var output = temp + '/files';
+// var output = temp + '/files';
 
 app.post('/upload', function(req, res) {
   var filePath     = req.files.files.path;
   var fileName     = req.files.files.name.split('.')[0];
+  var newFileDir   = fileName.replace(/ /g, '_');
   var extensions   = req.body.data;
-  var tmpDirectory = temp + '/' + fileName;
+  var tmpDirectory = temp + '/' + newFileDir;
 
   async.waterfall([
     function(cb){
       mkdirp(tmpDirectory, cb);
 
     }, function(made, cb){
+      console.log(made);
       fs.readFile(filePath, cb);
 
     }, function(fileContents, cb){
@@ -35,16 +37,19 @@ app.post('/upload', function(req, res) {
                   fileContents,
                   extensions,
                   fileName,
+                  tmpDirectory,
                   cb);
 
-    }], function(err){
+    }], function(err, fileName){
       if (err) { console.error('shit\'s crazy!') }
-      res.send('success');
+      // res.send('success ' + fileName);
+      res.sendfile(fileName)
 
     });
 });
 
-var processFile = function(path, data, extensions, name, cb) {
+var processFile = function(path, data, extensions, name, tempDir, cb) {
+
   fs.writeFile(path, data, function(err) {
     if (err) { console.log(err); }
     else {
@@ -53,35 +58,37 @@ var processFile = function(path, data, extensions, name, cb) {
       var oldName = arr[arr.length-1].split('.')[0]; // string created by fs
 
       async.each(extensions, function(val, cb){
-        jandoc.cmd( '-d ' + path + ' -o ' + output + ' --write ' + val,
+        jandoc.cmd( '-d ' + path + ' -o ' + tempDir + ' --write ' + val,
                     function(err){
-                      fs.rename(output + '/' + oldName + '.' + val,
-                                output + '/' + name    + '.' + val,
+                      fs.rename(tempDir + '/' + oldName + '.' + val,
+                                tempDir + '/' + name    + '.' + val,
                                 cb);
                     }
         );
       }, function(err) {
-          if( err ) { console.error('A file failed to process'); }
+          if( err ) { console.error(err +'\nA file failed to process'); }
           else {
-            new targz().compress(
-              output,
-              name+'.tar.gz',
-              function(err){
-                deleteDirectories();
-                cb(err, name+'.tar.gz');
-              }
-            );
+            async.waterfall([
+              function(cb){
+                new targz().compress( tempDir, name+'.tar.gz', function(err){
+                  cb(err, name+'.tar.gz')
+                });
+
+              }, function(gzipName, cb){
+                deleteDirectories(function(err){
+                  console.log('temp dir removed!');
+                  cb(err, gzipName);
+                });
+
+              },
+
+            ], cb);
           }
       });
     }
   });
 };
 
-var deleteDirectories = function() {
-  rmdir(__dirname+'/temp', function(err) {
-    if(err) {
-      console.error(err)
-    }
-    console.log('temp dir removed!');
-  });
+var deleteDirectories = function(cb) {
+  rmdir(temp, cb);
 }
