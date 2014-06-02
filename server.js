@@ -29,9 +29,7 @@ app.post('/upload', function(req, res) {
       mkdirp(tmpDirectory, cb);
 
     }, function(made, cb){
-      console.log(made);
       fs.readFile(filePath, cb);
-
     }, function(fileContents, cb){
       processFile(filePath,
                   fileContents,
@@ -41,9 +39,9 @@ app.post('/upload', function(req, res) {
                   cb);
 
     }], function(err, fileName){
-      if (err) { console.error('shit\'s crazy!') }
+      if (err) { console.error(err) }
       // res.send('success ' + fileName);
-      res.sendfile(fileName)
+      res.download(fileName, fileName)
 
     });
 });
@@ -51,7 +49,7 @@ app.post('/upload', function(req, res) {
 var processFile = function(path, data, extensions, name, tempDir, cb) {
 
   fs.writeFile(path, data, function(err) {
-    if (err) { console.log(err); }
+    if (err) { console.error(err); }
     else {
       extensions  = JSON.parse(extensions);
       var arr     = path.split('/');
@@ -76,7 +74,6 @@ var processFile = function(path, data, extensions, name, tempDir, cb) {
 
               }, function(gzipName, cb){
                 deleteDirectories(function(err){
-                  console.log('temp dir removed!');
                   cb(err, gzipName);
                 });
 
@@ -92,3 +89,5 @@ var processFile = function(path, data, extensions, name, tempDir, cb) {
 var deleteDirectories = function(cb) {
   rmdir(temp, cb);
 }
+
+// TODO: remove gzip
