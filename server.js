@@ -15,42 +15,32 @@ app.use(express.static(__dirname + '/public'));
 app.listen(port);
 
 var temp   = __dirname + '/temp';
-var output = __dirname + '/temp/files';
-
-makeDirStructure = function(cb) {
-  mkdirp(temp, function (err) {
-    if (err) console.error(err)
-    else {
-      mkdirp(output, function (err) {
-        if (err) console.error(err)
-      });
-    }
-  });
-  cb();
-}
+var output = temp + '/files';
 
 app.post('/upload', function(req, res) {
-
   var filePath     = req.files.files.path;
   var fileName     = req.files.files.name.split('.')[0];
   var extensions   = req.body.data;
 
-  makeDirStructure(function(err){
-    if(err) {
-      console.error(err)
-    } else {
-      console.log('file structure created')
-      fs.readFile(filePath, function(err, data){
-        if(err){
-          console.error(err);
-        } else {
-          processFile(filePath, data, extensions, fileName, function(){
-            res.send('success')
-          });
-        }
-      });
-    }
-  });
+  async.waterfall([
+    function(cb){
+      mkdirp(output, cb);
+
+    }, function(made, cb){
+      fs.readFile(filePath, cb);
+
+    }, function(fileContents, cb){
+      processFile(filePath,
+                  fileContents,
+                  extensions,
+                  fileName,
+                  cb);
+
+    }], function(err){
+      if (err) { console.error('shit\'s crazy!') }
+      res.send('success');
+
+    });
 });
 
 var processFile = function(path, data, extensions, name, cb) {
