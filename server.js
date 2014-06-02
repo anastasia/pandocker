@@ -40,9 +40,7 @@ app.post('/upload', function(req, res) {
 
     }], function(err, fileName){
       if (err) { console.error(err) }
-      // res.send('success ' + fileName);
-      res.download(fileName, fileName)
-
+      res.download(fileName);
     });
 });
 
