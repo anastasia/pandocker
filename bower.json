@@ -1,0 +1,25 @@
+{
+  "name": "pandocker",
+  "version": "0.0.0",
+  "homepage": "https://github.com/anastasia/pandocker",
+  "authors": [
+    "Anastasia Aizman <anastasia.aizman@gmail.com>",
+    "Sam Stites <sam@stites.io>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.10",
+    "angular": "~1.2.16",
+    "bootstrap": "~3.1.1",
+    "angular-file-upload": "~0.5.7",
+    "ng-file-upload-shim": "~1.4.0"
+  }
+}
