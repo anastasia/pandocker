@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='pd'>
 <head>
   <meta charset=utf-8>
-  <title>Simple Express Static Server</title>
+  <title>Pandocker - dock your academic papers here</title>
+  <link href='http://fonts.googleapis.com/css?family=Alegreya+Sans:400,500,700,400italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
-  Hello World
+  <div class="container">
+    <!-- HEADER -->
+    <div class="row">
+      <div class="pd-nav .col-lg-8">
+        <div class="pd-nav-left">BETA</div>
+      </div>
+    </div>
+    <!-- TITLE -->
+    <div class="row">
+      <div class="pd-title">
+        <div class="pd-title-subtext"><em>convert your files</em></div>
+        <div class="pd-title-main">PANDOCKER</div>
+      </div>
+    </div>
+    <div ui-view></div>
+
+    <!-- FOOTER -->
+    <div class="row">
+      <div class="pd-footer .col-lg-12">
+        <div class="pd-footer-left">
+        <a href="www.github.com/anastasia/pandoc">github : pandoc</a>
+        </div>
+    </div>
+    </div>
+  </div>
 </body>
+<script src='lib/angular/angular.min.js'></script>
+<script src='lib/angular-ui-router/release/angular-ui-router.min.js'></script>
+<!-- <script src='lib/ng-file-upload-shim/angular-file-upload-shim.min.js'></script> -->
+<!-- <script src='lib/ng-file-upload-shim/angular-file-upload.min.js'></script> -->
+<script src='lib/angular-file-upload/angular-file-upload.min.js'></script>
+<script src='features/upload/controller.js'></script>
+<script src='app2.js'></script>
 </html>
