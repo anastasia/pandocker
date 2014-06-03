@@ -26,18 +26,19 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 .controller('upload', function($scope, $rootScope, $fileUploader){
   $scope.$on('fileChange', function(evt, fileName){
-    $scope.filename = fileName
-  })
+    $scope.filename = fileName;
+  });
 })
+
 .directive('pdFileUpload', function(){
   return {
     restrict: 'A',
     template: '<input type="file" id="myFile"/>',
     link: function(scope, element, attrs) {
           element.on('change', function(evt, fileName){
-            scope.$broadcast('fileChange', evt.target.value)
-            scope.$digest()
-          })
+            scope.$broadcast('fileChange', evt.target.value);
+            scope.$digest();
+          });
         },
   };
 })
