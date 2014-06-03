@@ -19,53 +19,25 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
     "Groff man pages", "Haddock markup", "InDesign ICML",
     ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
-    ".pdf", ".md", ".rst",
-    "AsciiDoc", "MediaWiki markup", "Emacs Org-Mode",
-    "Textile"
+    ".pdf", ".md", ".rst", "AsciiDoc", "MediaWiki markup",
+    "Emacs Org-Mode", "Textile"
   ];
 })
 
+.controller('upload', function($scope, $rootScope, $fileUploader){
+  $scope.$on('fileChange', function(evt, fileName){
+    $scope.filename = fileName
+  })
+})
 .directive('pdFileUpload', function(){
   return {
     restrict: 'A',
-    scope: {
-      filename : '='
-    },
-    template: '<div id="test">{{filename || "somefile"}}</div>' +
-    '<input type="file" id="myFile"/>'+ 
-    '<button id="fileButton">{{buttonName}}</button>',
-    link : function($scope, $element, scope, element, attributes) {
-            $element.bind('change', function() {
-              $scope.filename = 'hi there';
-              console.log($scope, scope)
-              console.log("change !");
-            });
-            $element.on('change', function() {
-              $scope.filename = 'woo';
-
-            })
+    template: '<input type="file" id="myFile"/>',
+    link: function(scope, element, attrs) {
+          element.on('change', function(evt, fileName){
+            scope.$broadcast('fileChange', evt.target.value)
+            scope.$digest()
+          })
         },
-    // controller: function($scope, $element){
-    //   $scope.buttonName = 'browse';
-    //   $scope.fileNameChanged = function(){
-    //     $scope.filename = document.getElementById('myFile').value;
-    //     $scope.$broadcast('filenameChanged')
-    //     console.log($scope.filename)
-    //   }
-
-    //   $element.on('change', function(e){
-    //     $scope.filename = document.getElementById('myFile').value;
-    //     console.log('changing name!')
-    //     $scope.$emit('filenameChanged');
-    //   })
-    // },
   };
 })
-
-.controller('upload', function($scope, $rootScope, $fileUploader){
-  $scope.formats = $rootScope.formats;
-  $scope.$on('filenameChanged', function(e) {
-    $scope.filename = document.getElementById('myFile').value;
-  });
-})
-        // $scope.buttonName = 'upload';
