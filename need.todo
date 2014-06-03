@@ -1,2 +1,3 @@
-To create a pdf with pandoc, use the latex or beamer writer and specify
+ ☐ To create a pdf with pandoc, use the latex or beamer writer and specify
 an output file with .pdf extension (pandoc -t latex -o filename.pdf).
+ ☐ remove gzip
