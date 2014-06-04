@@ -17,10 +17,10 @@ app.listen(port);
 var temp   = __dirname + '/temp';
 
 app.post('/upload', function(req, res) {
-  var filePath     = req.files.files.path;
-  var fileName     = req.files.files.name.split('.')[0];
+  var filePath     = req.files.file.ws.path;
+  var fileName     = req.files.file.name.split('.')[0];
   var newFileDir   = fileName.replace(/ /g, '_');
-  var extensions   = req.body.data;
+  var extensions   = req.body.extensions;
   var tmpDirectory = temp + '/' + newFileDir;
 
   async.waterfall([
