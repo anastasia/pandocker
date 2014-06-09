@@ -19,20 +19,26 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
     "Groff man pages", "Haddock markup", "InDesign ICML",
     ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
-    ".pdf", ".md", ".rst",
-    "AsciiDoc", "MediaWiki markup", "Emacs Org-Mode",
-    "Textile"
+    ".pdf", ".md", ".rst", "AsciiDoc", "MediaWiki markup",
+    "Emacs Org-Mode", "Textile"
   ];
+})
+
+.controller('upload', function($scope, $rootScope, $fileUploader){
+  $scope.$on('fileChange', function(evt, fileName){
+    $scope.filename = fileName;
+  });
 })
 
 .directive('pdFileUpload', function(){
   return {
     restrict: 'A',
-    templateUrl: 'features/upload/pd-file-upload.html',
+    template: '<input type="file" id="myFile"/>',
+    link: function(scope, element, attrs) {
+          element.on('change', function(evt, fileName){
+            scope.$broadcast('fileChange', evt.target.value);
+            scope.$digest();
+          });
+        },
   };
-})
-
-.controller('upload', function($scope, $rootScope, $fileUploader){
-  $scope.formats = $rootScope.formats;
-  console.log($fileUploader.queue)
 })

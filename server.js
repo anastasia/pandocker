@@ -15,7 +15,6 @@ app.use(express.static(__dirname + '/public'));
 app.listen(port);
 
 var temp   = __dirname + '/temp';
-// var output = temp + '/files';
 
 app.post('/upload', function(req, res) {
   var filePath     = req.files.files.path;
@@ -30,6 +29,7 @@ app.post('/upload', function(req, res) {
 
     }, function(made, cb){
       fs.readFile(filePath, cb);
+
     }, function(fileContents, cb){
       processFile(filePath,
                   fileContents,
@@ -86,6 +86,4 @@ var processFile = function(path, data, extensions, name, tempDir, cb) {
 
 var deleteDirectories = function(cb) {
   rmdir(temp, cb);
-}
-
-// TODO: remove gzip
+};
