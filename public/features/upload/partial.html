@@ -1,9 +1,10 @@
 <div class="pd-upload">
   <div class="pd-upload-title"><em>upload your file from your computer</em></div>
   <!-- INPUT -->
-  {{filename}}
-  <div pd-file-upload></div>
-  <br/>
+  <div class="pd-input-div">
+    <div class="pd-file-path">{{filename}}</div>
+    <div class="pd-file-upload" pd-file-upload></div>
+  </div>
   <!-- FILE-OPTIONS -->
   <div>choose your format</div>
   <ul class="pd-file-options" ng-repeat="format in formats">
