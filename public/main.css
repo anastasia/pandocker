@@ -87,11 +87,11 @@ input[type=file] {
 }
 
 .pd-file-upload {
-  width: 19.1%;
+  width: 20%;
   height: 100%;
   background-color: steelblue;
   display: inline-block;
   position: relative;
   float: right;
-  /*bottom: 60px;*/
+  bottom: 60px;
 }
