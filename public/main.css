@@ -71,7 +71,7 @@ input[type=file] {
   width:570px;
   height:52px;
   border:solid;
-  border-color:red;
+  border-color:#72C4E0;
   border-width: 1px;
   margin: 11px auto;
 }
@@ -79,7 +79,6 @@ input[type=file] {
 .pd-file-path {
   width: 80%;
   height: 100%;
-  background-color: blue;
   display: inline-block;
   overflow: hidden;
   padding: 7px 20px;
@@ -89,7 +88,7 @@ input[type=file] {
 .pd-file-upload {
   width: 20%;
   height: 100%;
-  background-color: steelblue;
+  background-color:#C5F7FF;
   display: inline-block;
   position: relative;
   float: right;
