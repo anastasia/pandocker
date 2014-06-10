@@ -1,3 +1,9 @@
+*, *:before, *:after {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+
 body {
   font-family: 'Alegreya Sans', sans-serif;
   font-size: 25px;
@@ -42,6 +48,7 @@ body {
 .pd-upload {
   width: 575px;
   margin: auto;
+  padding: 2px;
 }
 
 .pd-upload-title {
@@ -57,31 +64,34 @@ input[type=file] {
   font-size: 20px;
   filter: alpha(opacity=0);
   opacity: 0;
-  /*position: absolute;*/
+  border: 0;
 }
 
 .pd-input-div {
-  width:574px;
-  height:51px;
+  width:570px;
+  height:52px;
   border:solid;
   border-color:red;
-  border-width: 2px;
-  margin: 13px -5px;
+  border-width: 1px;
+  margin: 11px auto;
 }
 
 .pd-file-path {
-  width:80%;
-  height:100%;
+  width: 80%;
+  height: 100%;
   background-color: blue;
   display: inline-block;
   overflow: hidden;
   padding: 7px 20px;
-  margin:0px;
+  margin: 0px;
 }
 
 .pd-file-upload {
-  width:19%;
-  height:99%;
-  background-color:steelblue;
-  display:inline-block;
+  width: 20%;
+  height: 100%;
+  background-color: steelblue;
+  display: inline-block;
+  position: relative;
+  float: right;
+  /*bottom: 60px;*/
 }
