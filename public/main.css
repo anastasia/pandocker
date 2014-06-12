@@ -96,11 +96,37 @@ input[type=file] {
 }
 
 .pd-format-header {
-  margin: 62px 0px 24px;
+  margin: 62px 0px 8px;
   font-weight: 200;
   letter-spacing: 0.05em;
 }
 
-.pd-format-type {
-  
+.pd-file-options {
+    width:100%;
+
+    margin:0 auto;
+    padding:0;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: felx-start;
+    align-content: flex-start;
+    align-items: flex-start;
+}
+li {
+  display:inline-block;
+  list-style-type: none;
+}
+.pd-file-options li {
+  /*display:inline-block;*/
+  font-size: 20px;
+  padding: 14px 19px;
+  margin: 5px;
+
+  background-color: #E5E5E5;
+
+  flex-basis:auto;
+  flex-shrink:1;
+  align-self: flex-start
 }
