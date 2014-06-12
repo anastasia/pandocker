@@ -102,17 +102,17 @@ input[type=file] {
 }
 
 .pd-file-options {
-    width:100%;
+  width:100%;
 
-    margin:0 auto;
-    padding:0;
+  margin:0 auto;
+  padding:0;
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: felx-start;
-    align-content: flex-start;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: felx-start;
+  align-content: flex-start;
+  align-items: flex-start;
 }
 li {
   display:inline-block;
@@ -130,3 +130,23 @@ li {
   flex-shrink:1;
   align-self: flex-start
 }
+
+
+.pd-footer {
+  margin: 100px 0px 0px;
+  padding:25px 35px;
+  height:70px;
+  font-size:16px;
+  background-color: #E9FCFF;
+}
+
+.pd-footer-left {
+  float:left;
+}
+.pd-footer-right {
+  float:right;
+}
+/*a :active{
+  color:#000;
+}
+*/
