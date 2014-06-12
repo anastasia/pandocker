@@ -127,8 +127,10 @@ li {
   background-color: #E5E5E5;
 
   flex-basis:auto;
+  flex-grow:1;
+  text-align:center;
   flex-shrink:1;
-  align-self: flex-start
+  align-self: flex-start;
 }
 
 
