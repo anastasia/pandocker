@@ -96,7 +96,11 @@ input[type=file] {
 }
 
 .pd-format-header {
-  margin-top: 62px;
+  margin: 62px 0px 24px;
   font-weight: 200;
   letter-spacing: 0.05em;
+}
+
+.pd-format-type {
+  
 }
