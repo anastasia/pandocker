@@ -94,3 +94,9 @@ input[type=file] {
   float: right;
   bottom: 60px;
 }
+
+.pd-format-header {
+  margin-top: 62px;
+  font-weight: 200;
+  letter-spacing: 0.05em;
+}
