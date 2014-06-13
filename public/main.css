@@ -93,6 +93,8 @@ input[type=file] {
   position: relative;
   float: right;
   bottom: 60px;
+  text-align: center;
+  padding-top: 7px;
 }
 
 .pd-format-header {

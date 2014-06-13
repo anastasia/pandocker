@@ -25,7 +25,6 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 })
 
 .controller('upload', function($scope, $rootScope, $fileUploader){
-  $scope.action = 'browse';
   $scope.$on('fileChange', function(evt, fileName){
     $scope.filename = fileName;
     $scope.action = 'upload';
@@ -35,10 +34,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 .directive('pdFileUpload', function(){
   return {
     restrict: 'A',
-    template: '<input type="file" id="myFile"/> {{action}}',
-    scope: {
-      action: '='
-    },
+    template: '{{ action || "browse" }}<input type="file" id="myFile"/>',
     link: function(scope, element, attrs) {
           element.on('change', function(evt, fileName){
             scope.$broadcast('fileChange', evt.target.value);
