@@ -65,6 +65,7 @@ input[type=file] {
   filter: alpha(opacity=0);
   opacity: 0;
   border: 0;
+  position:absolute;
 }
 
 .pd-input-div {
