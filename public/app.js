@@ -29,7 +29,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   $scope.$on('fileChange', function(evt, fileName){
     $scope.filename = fileName;
     $scope.action = 'upload';
-  })
+  });
 })
 
 .directive('pdFileUpload', function(){
@@ -41,9 +41,9 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     },
     link: function(scope, element, attrs) {
           element.on('change', function(evt, fileName){
-            scope.$broadcast('fileChange', evt.target.value)
-            scope.$digest()
-          })
+            scope.$broadcast('fileChange', evt.target.value);
+            scope.$digest();
+          });
         },
   };
 })
