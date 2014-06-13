@@ -26,7 +26,8 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 .controller('upload', function($scope, $rootScope, $fileUploader){
   $scope.$on('fileChange', function(evt, fileName){
-    $scope.filename = fileName;
+    var fileArr = fileName.split('\\');
+    $scope.filename = fileArr[fileArr.length-1];
     $scope.action = 'upload';
   });
 })
