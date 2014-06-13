@@ -1,3 +1,9 @@
+*, *:before, *:after {
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  box-sizing:border-box;
+}
+
 body {
   font-family: 'Alegreya Sans', sans-serif;
   font-size: 25px;
@@ -38,9 +44,11 @@ body {
   padding-top: 1px;
   letter-spacing: 0.16em;
 }
+
 .pd-upload {
   width: 575px;
-  margin:auto;
+  margin: auto;
+  padding: 2px;
 }
 
 .pd-upload-title {
@@ -49,10 +57,101 @@ body {
   padding-top: 6px;
   letter-spacing: 0.11em;
 }
+
 input[type=file] {
-    font-size: 20px;
-    /*filter: alpha(opacity=0);*/
-    /*opacity: 0;*/
-    position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  border: 0;
+  position:absolute;
 }
 
+.pd-input-div {
+  width:570px;
+  height:52px;
+  border:solid;
+  border-color:#72C4E0;
+  border-width: 1px;
+  margin: 11px auto;
+}
+
+.pd-file-path {
+  width: 80%;
+  height: 100%;
+  display: inline-block;
+  overflow: hidden;
+  padding: 7px 20px;
+  margin: 0px;
+}
+
+.pd-file-upload {
+  width: 20%;
+  height: 100%;
+  background-color:#C5F7FF;
+  display: inline-block;
+  position: relative;
+  float: right;
+  bottom: 60px;
+  text-align: center;
+  padding-top: 7px;
+}
+
+.pd-format-header {
+  margin: 62px 0px 8px;
+  font-weight: 200;
+  letter-spacing: 0.05em;
+}
+
+.pd-file-options {
+  width:100%;
+
+  margin:0 auto;
+  padding:0;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: felx-start;
+  align-content: flex-start;
+  align-items: flex-start;
+}
+li {
+  display:inline-block;
+  list-style-type: none;
+}
+.pd-file-options li {
+  /*display:inline-block;*/
+  font-size: 20px;
+  padding: 14px 19px;
+  margin: 5px;
+
+  background-color: #E5E5E5;
+
+  flex-basis:auto;
+  flex-grow:1;
+  text-align:center;
+  flex-shrink:1;
+  align-self: flex-start;
+}
+
+
+.pd-footer {
+  margin: 100px 0px 0px;
+  padding:25px 35px;
+  height:70px;
+  font-size:16px;
+  background-color: #E9FCFF;
+}
+
+.pd-footer-left {
+  float:left;
+}
+.pd-footer-right {
+  float:right;
+}
+/*a :active{
+  color:#000;
+}
+*/

@@ -13,27 +13,29 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 .run(function($rootScope) {
   $rootScope.formats = [
-    ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
+    "JSON", "HTML", ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
     "reveal.js", "Slideous", "S5", "DZSlides",
     ".docx", ".doc", ".odt", ".xml", ".epub (v2)",
-    ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
-    "Groff man pages", "Haddock markup", "InDesign ICML",
+    // ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
+    // "Groff man pages", "Haddock markup", "InDesign ICML",
     ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
-    ".pdf", ".md", ".rst", "AsciiDoc", "MediaWiki markup",
+    // ".pdf", ".md", ".rst", "AsciiDoc", "MediaWiki markup",
     "Emacs Org-Mode", "Textile"
   ];
 })
 
 .controller('upload', function($scope, $rootScope, $fileUploader){
   $scope.$on('fileChange', function(evt, fileName){
-    $scope.filename = fileName;
+    var fileArr = fileName.split('\\');
+    $scope.filename = fileArr[fileArr.length-1];
+    $scope.action = 'upload';
   });
 })
 
 .directive('pdFileUpload', function(){
   return {
     restrict: 'A',
-    template: '<input type="file" id="myFile"/>',
+    template: '<input type="file" id="myFile"/><div>{{ action || "browse" }}</div>',
     link: function(scope, element, attrs) {
           element.on('change', function(evt, fileName){
             scope.$broadcast('fileChange', evt.target.value);
