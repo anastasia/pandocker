@@ -94,6 +94,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
       }).error(function(data){
         console.log('error!',data)
       });
+    }
   };
 });
 
