@@ -13,13 +13,13 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 .run(function($rootScope) {
   $rootScope.formats = [
-    ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
+    "JSON", "HTML", ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
     "reveal.js", "Slideous", "S5", "DZSlides",
     ".docx", ".doc", ".odt", ".xml", ".epub (v2)",
-    ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
-    "Groff man pages", "Haddock markup", "InDesign ICML",
+    // ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
+    // "Groff man pages", "Haddock markup", "InDesign ICML",
     ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
-    ".pdf", ".md", ".rst", "AsciiDoc", "MediaWiki markup",
+    // ".pdf", ".md", ".rst", "AsciiDoc", "MediaWiki markup",
     "Emacs Org-Mode", "Textile"
   ];
 })
@@ -97,4 +97,3 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     }
   };
 });
-
