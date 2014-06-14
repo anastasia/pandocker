@@ -50,7 +50,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
         }
       };
       if($scope.fileExists){
-        postFile.pdFileUpload($scope.files,$scope.extensions);
+        postFile.upload($scope.files,$scope.extensions);
       }
     }
   });
