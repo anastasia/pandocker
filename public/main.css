@@ -85,3 +85,11 @@ input[type=file] {
   background-color:steelblue;
   display:inline-block;
 }
+
+input:focus {
+  outline:none;
+}
+
+.text-field {
+  width:80%;
+}
