@@ -49,10 +49,20 @@ body {
   padding-top: 6px;
   letter-spacing: 0.11em;
 }
+
+input:focus {
+  outline:none;
+}
+
 input[type=file] {
     font-size: 20px;
     /*filter: alpha(opacity=0);*/
     /*opacity: 0;*/
-    position: absolute;
+    /*position: absolute;*/
+    width:100px;
+    overflow: hidden;
 }
 
+.text-field {
+  width:80%;
+}
