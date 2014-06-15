@@ -13,9 +13,10 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 .run(function($rootScope) {
   $rootScope.formats = [
-    "JSON", "HTML", ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
+    "JSON", ".html", ".xhtml", ".html(5)", "Slidy",
     "reveal.js", "Slideous", "S5", "DZSlides",
     ".docx", ".doc", ".odt", ".xml", ".epub (v2)",
+    ".md", ".pdf",
     // ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
     // "Groff man pages", "Haddock markup", "InDesign ICML",
     ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
@@ -63,9 +64,11 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
               '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload" ng-click="clicked()" ng-init="beenClicked=false"/>',
     link: function(scope, element, attrs) {
       // http://plnkr.co/edit/DVALMH?p=preview
+          console.log('in directive, pdFileUpload', element, element.find('input')[1])
           element.find('input')[1].on('click', function(){
-            element.find("input")[0].click();
-            element.find("input").on("change",function(){
+            console.log('clicking')
+            element.find('input')[0].click();
+            element.find('input').on('change',function(){
               scope.$broadcast('fileChange', evt.target);
               scope.fileExists = true;
               scope.$digest();
