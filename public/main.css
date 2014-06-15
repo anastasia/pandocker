@@ -95,12 +95,14 @@ input[type=file] {
   height:40px;
   border:#72C4E0 solid 1.5px;
   margin-top:10px;
+  position:relative;
 }
 
 .pd-file-path {
   width:80%;
   height:100%;
   display:inline-block;
+  position:absolute;
   overflow:hidden;
   padding:7px 20px;
   margin:0px;
@@ -111,7 +113,7 @@ input[type=file] {
   height:100%;
   background-color:#C5F7FF;
   display:inline-block;
-  position:relative;
+  /*position:relative;*/
   float:right;
   bottom:48px;
   text-align:center;
@@ -201,4 +203,9 @@ input:focus {
   background-color:transparent;
   border:none;
   margin-bottom:10px;
+}
+
+.cancel {
+  display:inline-block;
+  position: absolute;
 }
