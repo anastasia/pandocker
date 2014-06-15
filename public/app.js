@@ -25,8 +25,18 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 })
 
 .controller('upload', function($scope, $rootScope, $http, postFile){
-  $scope.fileExists       = false;
-  $scope.browseOrUpload   = 'browse';
+  $scope.fileExists      = false;
+  $scope.browseOrUpload  = 'browse';
+  $scope.extensions      = [];
+
+  $scope.chooseExtension = function(format) {
+    var indexOfExtension = $scope.extensions.indexOf(format)
+    if(indexOfExtension < 0){
+      $scope.extensions.push(format)
+    } else {
+      $scope.extensions.splice(indexOfExtension, 1);
+    }
+  };
 
   $scope.clicked = function() {
     if($scope.beenClicked){
@@ -42,14 +52,12 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   $scope.files = [];
   $scope.$on('fileChange', function(evt, targetFile){
 
-    console.log(targetFile);
     $scope.browseOrUpload = 'upload';
 
     var arr = targetFile.split('\\');
     $scope.filename = arr[arr.length - 1];
 
-    $scope.extensions = '["docx", "html"]';
-    // refactor needed
+    extensions = JSON.stringify($scope.extensions);
     if(targetFile.files){
       for(var i = 0; i < targetFile.files.length; i++) {
         if(typeof targetFile.files[i] === 'object') {
@@ -57,7 +65,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
         }
       };
       if($scope.fileExists){
-        postFile.upload($scope.files,$scope.extensions);
+        postFile.upload($scope.files,extensions);
       }
     }
   });
