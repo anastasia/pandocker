@@ -9,41 +9,42 @@
 </head>
 
 <body>
-  <div class="container">
-    <!-- HEADER -->
     <div class="row">
       <div class="pd-nav .col-lg-8">
         <div class="pd-nav-left">BETA</div>
       </div>
     </div>
-    <!-- TITLE -->
-    <div class="row">
-      <div class="pd-title">
-        <div class="pd-title-subtext"><em>convert your files</em></div>
-        <div class="pd-title-main">PANDOCKER</div>
-      </div>
-    </div>
-    <div ui-view></div>
+  <div class="container">
+    <!-- HEADER -->
 
-    <!-- FOOTER -->
+
+    <div id="content">
+     <!-- TITLE -->
+      <div class="row">
+        <div class="pd-title">
+          <div class="pd-title-subtext italic-text">convert your files</div>
+          <h1 class="pd-title-main">PANDOCKER</h1>
+        </div>
+      </div>
+      <div ui-view></div>
+    </div>
+<!-- FOOTER -->
+
+  </div>
     <div class="row">
-      <div class="pd-footer .col-lg-12">
+      <div class="pd-footer .col-lg-8">
         <div class="pd-footer-left">
           <a href="https://github.com/anastasia/pandocker">pandocker@github</a>
         </div>
         <div class="pd-footer-right">
           <a href="https://github.com/jgm/pandoc">pandoc@github</a>
-          <!-- <a href="http://johnmacfarlane.net/pandoc">pandoc homepage</a> -->
         </div>
+      </div>
     </div>
-    </div>
-  </div>
 </body>
+
 <script src='lib/angular/angular.min.js'></script>
 <script src='lib/angular-ui-router/release/angular-ui-router.min.js'></script>
-<!-- <script src='lib/ng-file-upload-shim/angular-file-upload-shim.min.js'></script> -->
-<!-- <script src='lib/ng-file-upload-shim/angular-file-upload.min.js'></script> -->
 <script src='lib/angular-file-upload/angular-file-upload.min.js'></script>
-<!-- <script src='features/upload/controller.js'></script> -->
 <script src='app.js'></script>
 </html>

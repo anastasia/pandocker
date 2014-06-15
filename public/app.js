@@ -32,6 +32,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     if($scope.beenClicked){
       $('#hiddenFileUpload').change(function(evt) {
         console.log($(this).val());
+        // trigger an event to stop finder window from coming down on "upload"
       });
     }
     $scope.browseOrUpload = $scope.beenClicked ? 'upload' : 'browse';
@@ -43,7 +44,6 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
     console.log(targetFile);
     $scope.browseOrUpload = 'upload';
-
 
     var arr = targetFile.split('\\');
     $scope.filename = arr[arr.length - 1];
