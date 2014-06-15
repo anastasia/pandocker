@@ -42,6 +42,8 @@ body {
 .pd-nav {
   background-color:#79C7E0;
   height:54px;
+  width:660px;
+  margin: 0 auto;
 }
 
 .pd-nav-left {

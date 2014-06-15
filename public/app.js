@@ -13,10 +13,9 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 .run(function($rootScope) {
   $rootScope.formats = [
-    "JSON", ".html", ".xhtml", ".html(5)", "Slidy",
+    "JSON", "HTML", ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
     "reveal.js", "Slideous", "S5", "DZSlides",
     ".docx", ".doc", ".odt", ".xml", ".epub (v2)",
-    ".md", ".pdf",
     // ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
     // "Groff man pages", "Haddock markup", "InDesign ICML",
     ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
@@ -33,6 +32,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     if($scope.beenClicked){
       $('#hiddenFileUpload').change(function(evt) {
         console.log($(this).val());
+        // trigger an event to stop finder window from coming down on "upload"
       });
     }
     $scope.browseOrUpload = $scope.beenClicked ? 'upload' : 'browse';
@@ -41,7 +41,13 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
   $scope.files = [];
   $scope.$on('fileChange', function(evt, targetFile){
-    $scope.filename = targetFile.value;
+
+    console.log(targetFile);
+    $scope.browseOrUpload = 'upload';
+
+    var arr = targetFile.split('\\');
+    $scope.filename = arr[arr.length - 1];
+
     $scope.extensions = '["docx", "html"]';
     // refactor needed
     if(targetFile.files){
@@ -63,18 +69,11 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     template: '<input type="file" width="30px" id="hiddenFileUpload"/>'+
               '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload" ng-click="clicked()" ng-init="beenClicked=false"/>',
     link: function(scope, element, attrs) {
-      // http://plnkr.co/edit/DVALMH?p=preview
-          console.log('in directive, pdFileUpload', element, element.find('input')[1])
-          element.find('input')[1].on('click', function(){
-            console.log('clicking')
-            element.find('input')[0].click();
-            element.find('input').on('change',function(){
-              scope.$broadcast('fileChange', evt.target);
-              scope.fileExists = true;
-              scope.$digest();
-            });
-          });
-        },
+      element.on('change', function(evt, fileName){
+        scope.$broadcast('fileChange', evt.target.value)
+        scope.$digest()
+      })
+    }
   };
 })
 
