@@ -33,20 +33,18 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   };
 
   $scope.clicked = function() {
-    if($scope.beenClicked){
-      $('#hiddenFileUpload').change(function(evt) {
-        console.log($(this).val());
-        // trigger an event to stop finder window from coming down on "upload"
-      });
-    }
-    $scope.browseOrUpload = $scope.beenClicked ? 'upload' : 'browse';
-    $scope.beenClicked    = !$scope.beenClicked;
+    // if($scope.beenClicked){
+    //   $('#hiddenFileUpload').change(function(evt) {
+    //     console.log($(this).val());
+    //     // trigger an event to stop finder window from coming down on "upload"
+    //   });
+    // }
+    // $scope.browseOrUpload = $scope.beenClicked ? 'upload' : 'browse';
+    // $scope.beenClicked    = !$scope.beenClicked;
   };
 
   $scope.files = [];
   $scope.$on('fileChange', function(evt, targetFile){
-
-    console.log(targetFile);
     $scope.browseOrUpload = 'upload';
 
     var arr = targetFile.split('\\');
@@ -71,7 +69,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   return {
     restrict: 'A',
     template: '<input type="file" width="30px" id="hiddenFileUpload"/>'+
-              '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload" ng-click="clicked()" ng-init="beenClicked=false"/>',
+              '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload"/>',
     link: function(scope, element, attrs) {
       element.on('change', function(evt, fileName){
         scope.$broadcast('fileChange', evt.target.value)
