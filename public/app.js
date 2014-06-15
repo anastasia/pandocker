@@ -25,22 +25,10 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 })
 
 .controller('upload', function($scope, $rootScope, $http, postFile){
-  $scope.fileExists       = false;
   $scope.browseOrUpload   = 'browse';
   $scope.removeFile = function(){
     $scope.browseOrUpload = 'browse';
     $scope.filename = '';
-  };
-
-  $scope.clicked = function() {
-    // if($scope.beenClicked){
-    //   $('#hiddenFileUpload').change(function(evt) {
-    //     console.log($(this).val());
-    //     // trigger an event to stop finder window from coming down on "upload"
-    //   });
-    // }
-    // $scope.browseOrUpload = $scope.beenClicked ? 'upload' : 'browse';
-    // $scope.beenClicked    = !$scope.beenClicked;
   };
 
   $scope.files = [];
@@ -68,7 +56,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 .directive('pdFileUpload', function(){
   return {
     restrict: 'A',
-    template: '<input type="file" width="30px" id="hiddenFileUpload"/>'+
+    template: '<input type="file" width="30px" id="hiddenFileUpload" ng-show="!filename"/>'+
               '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload"/>',
     link: function(scope, element, attrs) {
       element.on('change', function(evt, fileName){
