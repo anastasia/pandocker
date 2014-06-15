@@ -27,6 +27,10 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 .controller('upload', function($scope, $rootScope, $http, postFile){
   $scope.fileExists       = false;
   $scope.browseOrUpload   = 'browse';
+  $scope.removeFile = function(){
+    $scope.browseOrUpload = 'browse';
+    $scope.filename = '';
+  };
 
   $scope.clicked = function() {
     if($scope.beenClicked){

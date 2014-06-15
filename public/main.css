@@ -99,7 +99,7 @@ input[type=file] {
 }
 
 .pd-file-path {
-  width:80%;
+  width: 72.5%;
   height:100%;
   display:inline-block;
   position:absolute;
@@ -207,5 +207,8 @@ input:focus {
 
 .cancel {
   display:inline-block;
-  position: absolute;
+  width:7.5%;
+  height: 100%;
+  text-align: center;
+  vertical-align: text-top;
 }
