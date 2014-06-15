@@ -50,8 +50,8 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     link: function(scope, element, attrs) {
 
       element.on('change', function(evt, fileName){
-        scope.$broadcast('fileChange', evt.target.value)
-        scope.$digest()
+        scope.$broadcast('fileChange', evt.target.value);
+        scope.$digest();
       });
 
       element.on('click', function(evt){
