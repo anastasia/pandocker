@@ -8,6 +8,6 @@
   <!-- FILE-OPTIONS -->
   <div class="pd-format italic-text">choose your format</div>
   <ul class="pd-file-options">
-    <li ng-repeat="format in formats" ng-click="chooseExtension(format)">{{format}}</li>
+    <li ng-repeat="format in formats" ng-click="chooseExtension(format)" id="{{format}}"ng-class="getClass()">{{format}}</li>
   </ul>
 </div>

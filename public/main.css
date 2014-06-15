@@ -202,3 +202,7 @@ input:focus {
   border:none;
   margin-bottom:10px;
 }
+
+.selected {
+  background-color: #F02;
+}

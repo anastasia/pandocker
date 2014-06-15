@@ -32,9 +32,11 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   $scope.chooseExtension = function(format) {
     var indexOfExtension = $scope.extensions.indexOf(format)
     if(indexOfExtension < 0){
-      $scope.extensions.push(format)
+      $scope.extensions.push(format);
+      document.getElementById(format).style.backgroundColor = '#FF9290';
     } else {
       $scope.extensions.splice(indexOfExtension, 1);
+      document.getElementById(format).style.backgroundColor = '#E5E5E5';
     }
   };
 
