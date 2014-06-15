@@ -40,7 +40,14 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
   $scope.files = [];
   $scope.$on('fileChange', function(evt, targetFile){
-    $scope.filename = targetFile.value;
+
+    console.log(targetFile);
+    $scope.browseOrUpload = 'upload';
+
+
+    var arr = targetFile.split('\\');
+    $scope.filename = arr[arr.length - 1];
+
     $scope.extensions = '["docx", "html"]';
     // refactor needed
     if(targetFile.files){
@@ -62,16 +69,11 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     template: '<input type="file" width="30px" id="hiddenFileUpload"/>'+
               '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload" ng-click="clicked()" ng-init="beenClicked=false"/>',
     link: function(scope, element, attrs) {
-      // http://plnkr.co/edit/DVALMH?p=preview
-          element.find('input')[1].on('click', function(){
-            element.find("input")[0].click();
-            element.find("input").on("change",function(){
-              scope.$broadcast('fileChange', evt.target);
-              scope.fileExists = true;
-              scope.$digest();
-            });
-          });
-        },
+      element.on('change', function(evt, fileName){
+        scope.$broadcast('fileChange', evt.target.value)
+        scope.$digest()
+      })
+    }
   };
 })
 
