@@ -15,7 +15,6 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 })
 
 .controller('upload', function($scope, $rootScope, $http, postFile, getFileTypes){
-  $scope.fileExists       = false;
   $scope.browseOrUpload   = 'browse';
   $scope.extensions       = [];
   $scope.formats          = getFileTypes.all
@@ -45,21 +44,14 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 
 
-  $scope.clicked = function() {
-    if($scope.beenClicked){
-      $('#hiddenFileUpload').change(function(evt) {
-        console.log($(this).val());
-        // trigger an event to stop finder window from coming down on "upload"
-      });
-    }
-    $scope.browseOrUpload = $scope.beenClicked ? 'upload' : 'browse';
-    $scope.beenClicked    = !$scope.beenClicked;
+  $scope.removeFile = function(){
+    $scope.browseOrUpload = 'browse';
+    $scope.filename = '';
   };
 
-  $scope.files = [];
   $scope.$on('fileChange', function(evt, targetFile){
-
     $scope.browseOrUpload = 'upload';
+    $scope.filepath = targetFile;
 
     var arr = targetFile.split('\\');
     $scope.filename = arr[arr.length - 1];
@@ -78,16 +70,24 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   });
 })
 
-.directive('pdFileUpload', function(){
+.directive('pdFileUpload', function(postFile){
   return {
     restrict: 'A',
-    template: '<input type="file" width="30px" id="hiddenFileUpload"/>'+
-              '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload" ng-click="clicked()" ng-init="beenClicked=false"/>',
+    template: '<input type="file" width="30px" id="hiddenFileUpload" ng-show="!filename"/>'+
+              '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload"/>',
     link: function(scope, element, attrs) {
+
       element.on('change', function(evt, fileName){
-        scope.$broadcast('fileChange', evt.target.value)
-        scope.$digest()
-      })
+        scope.$broadcast('fileChange', evt.target.value);
+        scope.$digest();
+      });
+
+      element.on('click', function(evt){
+        if (!!scope.filename){
+          postFile.upload(scope.filepath, scope.extensions);
+        }
+      });
+
     }
   };
 })
