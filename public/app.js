@@ -12,21 +12,38 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 })
 
 .run(function($rootScope) {
-  $rootScope.formats = [
-    "JSON", "HTML", ".xhtml", ".html(5)", "Slidy slideshows (HTML)",
-    "reveal.js", "Slideous", "S5", "DZSlides",
-    ".docx", ".doc", ".odt", ".xml", ".epub (v2)",
-    // ".epub (v3)", "FictionBook2", "DocBook", "GNU TexInfo",
-    // "Groff man pages", "Haddock markup", "InDesign ICML",
-    ".OPML", ".LaTeX", "ConTeXt", "Beamer slides",
-    // ".pdf", ".md", ".rst", "AsciiDoc", "MediaWiki markup",
-    "Emacs Org-Mode", "Textile"
-  ];
 })
 
-.controller('upload', function($scope, $rootScope, $http, postFile){
+.controller('upload', function($scope, $rootScope, $http, postFile, getFileTypes){
   $scope.fileExists       = false;
   $scope.browseOrUpload   = 'browse';
+  $scope.extensions       = [];
+  $scope.formats          = getFileTypes.all
+  $scope.extensionsPicked = '  '
+  $scope.showName         = function(ext, val, mouse) {
+    if(mouse){
+      // document.getElementById(ext).innerText = val
+    } else {
+      document.getElementById(ext).innerText = ext
+    }
+  }
+  $scope.chooseExtension = function(format) {
+    var indexOfExtension = $scope.extensions.indexOf(format)
+    if(indexOfExtension < 0){
+      $scope.extensions.push(format);
+      document.getElementById(format).style.backgroundColor = '#FF9290';
+    } else {
+      $scope.extensions.splice(indexOfExtension, 1);
+      document.getElementById(format).style.backgroundColor = '#E5E5E5';
+    }
+    if($scope.extensions.length) {
+      $scope.extensionsPicked = 'convert to: '+$scope.extensions.join(' + ')
+    } else {
+      $scope.extensionsPicked = ' '
+    }
+  };
+
+
 
   $scope.clicked = function() {
     if($scope.beenClicked){
@@ -42,14 +59,12 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   $scope.files = [];
   $scope.$on('fileChange', function(evt, targetFile){
 
-    console.log(targetFile);
     $scope.browseOrUpload = 'upload';
 
     var arr = targetFile.split('\\');
     $scope.filename = arr[arr.length - 1];
 
-    $scope.extensions = '["docx", "html"]';
-    // refactor needed
+    extensions = JSON.stringify($scope.extensions);
     if(targetFile.files){
       for(var i = 0; i < targetFile.files.length; i++) {
         if(typeof targetFile.files[i] === 'object') {
@@ -57,7 +72,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
         }
       };
       if($scope.fileExists){
-        postFile.upload($scope.files,$scope.extensions);
+        postFile.upload($scope.files,extensions);
       }
     }
   });
@@ -94,8 +109,48 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
       }).success(function(data) {
         console.log('success!')
       }).error(function(data){
-        console.log('error!',data)
+        console.error('error!',data)
       });
     }
   };
+})
+.service('getFileTypes', function(){
+  return {
+    all: {
+      'json': "JSON",
+      'html': "HyperText Markup Language",
+      'html5': "HyperText Markup Language 5",
+      'xhtml': "extensible HyperText Markup Language",
+      'rst': "reStructuredText",
+      'asciidoc': "AsciiDoc",
+      'context': "ConTeXt",
+      'docbook': "DocBook",
+      'docx': "Word docx",
+      'dzslides': "DZSlides HTML5 + javascript slide show",
+      'epub': "EPUB v2 book",
+      'epub3': "EPUB v3",
+      'fb2': "FictionBook2 e-book",
+      'html': "HyperText Markup Language",
+      'html5': "HyperText Markup Language 5",
+      'icml': "InDesign ICML",
+      'json': "JSON",
+      'latex': "LaTex",
+      'man': "groff man",
+      'markdown': "Extended Markdown",
+      'mediawiki': "MediaWiki markup",
+      'native': "Native Haskell",
+      'odt': "OpenOffice text document",
+      'opendocument': "OpenDocument",
+      'opml': "OPML",
+      'org': "Emacs Org-Mode",
+      'plain': "plain text",
+      'revealjs': "reveal.js HTML5 + javascript slide show",
+      'rst': "reStructuredText",
+      'rtf': "rich text format",
+      's5': "S5 HTML and javascript slide show",
+      'slidy': "Slideous HTML and javascript slide show",
+      'texinfo': "GNU Texinfo",
+      'textile': "Textile"
+    }
+  }
 });
