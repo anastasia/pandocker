@@ -1,14 +1,16 @@
 <div class="pd-upload">
-  <div class="pd-upload-title italic-text">upload your file from your computer</div>
+  <div class="pd-upload-title italic-text">upload a file from your computer</div>
   <!-- INPUT -->
   <div class="pd-input-div">
     <div class="cancel" ng-show="filename" ng-click="removeFile()">X</div>
     <div class="pd-file-path">{{filename}}</div>
     <div class="pd-file-upload" pd-file-upload></div>
   </div>
+   <div class="pd-chosen-formats regular-text">{{extensionsPicked}}</div>
   <!-- FILE-OPTIONS -->
   <div class="pd-format italic-text">choose your format</div>
   <ul class="pd-file-options">
-    <li ng-repeat="format in formats">{{format}}</li>
+    <li ng-repeat="(extension, value) in formats" ng-click="chooseExtension(extension)" ng-mouseenter="showName(extension, value, true)" ng-mouseleave="showName(extension,value, false)"id="{{extension}}">{{extension}}</li>
+
   </ul>
 </div>

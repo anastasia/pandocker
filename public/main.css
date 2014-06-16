@@ -3,6 +3,14 @@
   -moz-box-sizing:border-box;
   box-sizing:border-box;
 }
+
+::selection {
+  background: #E9FCFF; /* Safari */
+  }
+::-moz-selection {
+  background: #E9FCFF; /* Firefox */
+}
+
 html {
   margin:0;
 }
@@ -33,8 +41,16 @@ body {
 }
 
 .italic-text {
+  font-family:'garamond', 'Crimson Text', serif;
   font-size:0.7em;
   font-style:italic;
+  font-weight:400;
+  color:#555;
+  letter-spacing:0.3px
+}
+
+.regular-text {
+  font-size:0.5em;
   font-weight:400;
   color:#333;
 }
@@ -63,11 +79,12 @@ body {
 }
 
 .pd-title-main {
-  color:#F02;
-  font-size:2em;
+  color:#FF4000;
+  font-size:1.4em;
   padding-top:1px;
   letter-spacing:0.16em;
-  font-weight:400;
+  font-weight:700;
+  font-family:'Dosis'
 }
 
 .pd-upload {
@@ -93,7 +110,7 @@ input[type=file] {
 .pd-input-div {
   width:90%;
   height:40px;
-  border:#72C4E0 solid 1.5px;
+  border:0.08em solid #72C4E0;
   margin-top:10px;
   position:relative;
 }
@@ -155,20 +172,10 @@ li {
   align-self:flex-start;
 }
 
-/*.pd-nav {
-  background-color:#79C7E0;
-  height:54px;
+.pd-file-options li:hover {
+  background-color: #E9FCFF;
 }
 
-.pd-nav-left {
-  color:#FFF;
-  letter-spacing:0.1em;
-  padding:10px 25px;
-  font-size:20px;
-  font-weight:700;
-}
-
-*/
 .pd-footer {
   height:54px;
   background-color:#E9FCFF;
@@ -187,6 +194,12 @@ li {
 .pd-footer-right {
   float:right;
 }
+
+.pd-chosen-formats {
+  margin-top:1em;
+  color: #FF9290;
+}
+
 a :active{
   color:#000;
 }
@@ -212,3 +225,8 @@ input:focus {
   text-align: center;
   vertical-align: text-top;
 }
+
+.selected {
+  background-color: #F02;
+}
+
