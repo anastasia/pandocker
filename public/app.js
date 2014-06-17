@@ -11,10 +11,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 })
 
-.run(function($rootScope) {
-})
-
-.controller('upload', function($scope, $rootScope, $http, postFile, getFileTypes){
+.controller('upload', function($scope, $http, $timeout, $upload, getFileTypes){
   $scope.browseOrUpload   = 'browse';
   $scope.extensions       = [];
   $scope.formats          = getFileTypes.all
@@ -43,31 +40,50 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   };
 
 
+  $scope.onFileSelect = function($files) {
+    $scope.upload = [];
+    $scope.uploadResult = [];
+    $scope.selectedFiles = $files;
+    $scope.dataUrls = [];
+    var singlefileIdx = 0
+    var $file = $files[singlefileIdx];
 
-  $scope.removeFile = function(){
-    $scope.browseOrUpload = 'browse';
-    $scope.filename = '';
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL($files[singlefileIdx]);
+
+    fileReader.onload = function(e) {
+      $timeout(function() {
+        $scope.dataUrls[singlefileIdx] = e.target.result;
+      });
+    }
+
   };
 
-  $scope.$on('fileChange', function(evt, targetFile){
-    $scope.browseOrUpload = 'upload';
-    $scope.filepath = targetFile;
 
-    var arr = targetFile.split('\\');
-    $scope.filename = arr[arr.length - 1];
+  // $scope.removeFile = function(){
+  //   $scope.browseOrUpload = 'browse';
+  //   $scope.filename = '';
+  // };
 
-    extensions = JSON.stringify($scope.extensions);
-    if(targetFile.files){
-      for(var i = 0; i < targetFile.files.length; i++) {
-        if(typeof targetFile.files[i] === 'object') {
-          $scope.files.push(targetFile.files[i]);
-        }
-      };
-      if($scope.fileExists){
-        postFile.upload($scope.files,extensions);
-      }
-    }
-  });
+  // $scope.$on('fileChange', function(evt, targetFile){
+  //   $scope.browseOrUpload = 'upload';
+  //   $scope.filepath = targetFile;
+
+  //   var arr = targetFile.split('\\');
+  //   $scope.filename = arr[arr.length - 1];
+
+  //   extensions = JSON.stringify($scope.extensions);
+  //   if(targetFile.files){
+  //     for(var i = 0; i < targetFile.files.length; i++) {
+  //       if(typeof targetFile.files[i] === 'object') {
+  //         $scope.files.push(targetFile.files[i]);
+  //       }
+  //     };
+  //     if($scope.fileExists){
+  //       postFile.upload($scope.files,extensions);
+  //     }
+  //   }
+  // });
 })
 
 .directive('pdFileUpload', function(postFile){
@@ -92,7 +108,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   };
 })
 
-.service('postFile', function($http) {
+.service('postFile', function($http, $timeout, $upload) {
   return {
     upload: function(files, extensions) {
       var formData = new FormData();

@@ -4,7 +4,9 @@
   <div class="pd-input-div">
     <div class="cancel" ng-show="filename" ng-click="removeFile()">X</div>
     <div class="pd-file-path">{{filename}}</div>
-    <div class="pd-file-upload" pd-file-upload></div>
+    <div class="pd-file-upload">
+      <input type="file" width="30px" id="hiddenFileUpload" ng-show="!filename" ng-file-select="onFileSelect($files)" onclick="this.value=null"/>
+    </div>
   </div>
    <div class="pd-chosen-formats regular-text">{{extensionsPicked}}</div>
   <!-- FILE-OPTIONS -->
