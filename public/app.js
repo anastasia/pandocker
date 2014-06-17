@@ -14,17 +14,19 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 .controller('upload', function($scope, $http, $timeout, $upload, getFileTypes){
   $scope.browseOrUpload   = 'browse';
   $scope.extensions       = [];
-  $scope.formats          = getFileTypes.all
-  $scope.extensionsPicked = '  '
+  $scope.formats          = getFileTypes.all;
+  $scope.extensionsPicked = '  ';
+
   $scope.showName         = function(ext, val, mouse) {
     if(mouse){
       // document.getElementById(ext).innerText = val
     } else {
-      document.getElementById(ext).innerText = ext
+      document.getElementById(ext).innerText = ext;
     }
   }
+
   $scope.chooseExtension = function(format) {
-    var indexOfExtension = $scope.extensions.indexOf(format)
+    var indexOfExtension = $scope.extensions.indexOf(format);
     if(indexOfExtension < 0){
       $scope.extensions.push(format);
       document.getElementById(format).style.backgroundColor = '#FF9290';
@@ -33,9 +35,9 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
       document.getElementById(format).style.backgroundColor = '#E5E5E5';
     }
     if($scope.extensions.length) {
-      $scope.extensionsPicked = 'convert to: '+$scope.extensions.join(' + ')
+      $scope.extensionsPicked = 'convert to: '+$scope.extensions.join(' + ');
     } else {
-      $scope.extensionsPicked = ' '
+      $scope.extensionsPicked = ' ';
     }
   };
 
@@ -45,7 +47,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     $scope.uploadResult = [];
     $scope.selectedFiles = $files;
     $scope.dataUrls = [];
-    var singlefileIdx = 0
+    var singlefileIdx = 0;
     var $file = $files[singlefileIdx];
 
     var fileReader = new FileReader();
@@ -66,12 +68,10 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     $scope.upload[index] = $upload.upload({
       url : 'upload',
       method: 'POST',
-      // headers: {'my-header': 'my-header-value'},
       data : {
         extensions : JSON.stringify($scope.extensions),
       },
       file: $scope.selectedFiles[index],
-      // fileFormDataName: 'files'
     }).then(function(response) {
       console.log('success!', response);
       $scope.uploadResult.push(response.data);
@@ -85,26 +85,6 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
   //   $scope.browseOrUpload = 'browse';
   //   $scope.filename = '';
   // };
-
-  // $scope.$on('fileChange', function(evt, targetFile){
-  //   $scope.browseOrUpload = 'upload';
-  //   $scope.filepath = targetFile;
-
-  //   var arr = targetFile.split('\\');
-  //   $scope.filename = arr[arr.length - 1];
-
-  //   extensions = JSON.stringify($scope.extensions);
-  //   if(targetFile.files){
-  //     for(var i = 0; i < targetFile.files.length; i++) {
-  //       if(typeof targetFile.files[i] === 'object') {
-  //         $scope.files.push(targetFile.files[i]);
-  //       }
-  //     };
-  //     if($scope.fileExists){
-  //       postFile.upload($scope.files,extensions);
-  //     }
-  //   }
-  // });
 })
 
 .directive('pdFileUpload', function(postFile){
