@@ -81,10 +81,13 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     })
   };
 
-  // $scope.removeFile = function(){
-  //   $scope.browseOrUpload = 'browse';
-  //   $scope.filename = '';
-  // };
+
+  $scope.abort = function(index) {
+    $scope.upload[index] = null;
+    $scope.browseOrUpload = 'browse';
+    $scope.filename = '';
+  };
+
 })
 
 .service('postFile', function($http, $timeout, $upload) {
