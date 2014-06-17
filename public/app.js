@@ -54,6 +54,9 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     fileReader.onload = function(e) {
       $timeout(function() {
         $scope.dataUrls[singlefileIdx] = e.target.result;
+
+        $scope.browseOrUpload = 'upload';
+        $scope.filename = $file.name;
       });
     }
 

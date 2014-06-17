@@ -5,7 +5,15 @@
     <div class="cancel" ng-show="filename" ng-click="removeFile()">X</div>
     <div class="pd-file-path">{{filename}}</div>
     <div class="pd-file-upload">
-      <input type="file" width="30px" id="hiddenFileUpload" ng-show="!filename" ng-file-select="onFileSelect($files)" onclick="this.value=null"/>
+      <input type="file" width="30px"
+        id="hiddenFileUpload"
+        ng-show="!filename"
+        ng-file-select="onFileSelect($files)"
+        onclick="this.value=null"/>
+      <input type="submit"
+        id="submit"
+        ng-model="fileExists"
+        ng-value="browseOrUpload"/>
     </div>
   </div>
    <div class="pd-chosen-formats regular-text">{{extensionsPicked}}</div>
