@@ -10,10 +10,11 @@
         ng-show="!filename"
         ng-file-select="onFileSelect($files)"
         onclick="this.value=null"/>
-      <input type="submit"
+      <div
         id="submit"
         ng-model="fileExists"
-        ng-value="browseOrUpload"/>
+        ng-click="start(0)">
+        {{browseOrUpload}}</div>
     </div>
   </div>
    <div class="pd-chosen-formats regular-text">{{extensionsPicked}}</div>

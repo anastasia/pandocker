@@ -59,9 +59,27 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
         $scope.filename = $file.name;
       });
     }
-
   };
 
+  $scope.start = function(index) {
+    $scope.errorMsg = null;
+    $scope.upload[index] = $upload.upload({
+      url : 'upload',
+      method: 'POST',
+      // headers: {'my-header': 'my-header-value'},
+      data : {
+        extensions : JSON.stringify($scope.extensions),
+      },
+      file: $scope.selectedFiles[index],
+      // fileFormDataName: 'files'
+    }).then(function(response) {
+      console.log('success!', response);
+      $scope.uploadResult.push(response.data);
+    }, function(response) {
+      console.log('error!');
+      if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+    })
+  };
 
   // $scope.removeFile = function(){
   //   $scope.browseOrUpload = 'browse';
