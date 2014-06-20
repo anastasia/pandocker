@@ -17,8 +17,9 @@ app.listen(port);
 var temp   = __dirname + '/temp';
 
 app.post('/upload', function(req, res) {
-  var filePath     = req.files.file.ws.path;
-  var fileName     = req.files.file.name.split('.')[0];
+  console.log(req)
+  var filePath     = req.body.file;
+  var fileName     = filePath.split('\\')[2];
   var newFileDir   = fileName.replace(/ /g, '_');
   var extensions   = req.body.extensions;
   var tmpDirectory = temp + '/' + newFileDir;
@@ -39,13 +40,14 @@ app.post('/upload', function(req, res) {
                   cb);
 
     }], function(err, fileName){
+      console.log('downloading filename',fileName)
       if (err) { console.error(err) }
       res.download(fileName);
     });
 });
 
 var processFile = function(path, data, extensions, name, tempDir, cb) {
-
+  console.log('processFile', name, data, path)
   fs.writeFile(path, data, function(err) {
     if (err) { console.error(err); }
     else {

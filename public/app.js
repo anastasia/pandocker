@@ -83,7 +83,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
       });
 
       element.on('click', function(evt){
-        if (!!scope.filename){
+        if(!!scope.filename) {
           postFile.upload(scope.filepath, scope.extensions);
         }
       });
@@ -94,11 +94,9 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 .service('postFile', function($http) {
   return {
-    upload: function(files, extensions) {
+    upload: function(file, extensions) {
       var formData = new FormData();
-      // just loading single file now, change this later?
-      formData.append('file', files[0]);
-      // append extensions here
+      formData.append('file', file);
       formData.append('extensions', extensions);
       $http({
         method: 'POST',
