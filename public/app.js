@@ -11,23 +11,22 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
 
 })
 
-.run(function($rootScope) {
-})
-
-.controller('upload', function($scope, $rootScope, $http, postFile, getFileTypes){
+.controller('upload', function($scope, $http, $timeout, $upload, getFileTypes){
   $scope.browseOrUpload   = 'browse';
   $scope.extensions       = [];
-  $scope.formats          = getFileTypes.all
-  $scope.extensionsPicked = '  '
+  $scope.formats          = getFileTypes.all;
+  $scope.extensionsPicked = '  ';
+
   $scope.showName         = function(ext, val, mouse) {
     if(mouse){
       // document.getElementById(ext).innerText = val
     } else {
-      document.getElementById(ext).innerText = ext
+      document.getElementById(ext).innerText = ext;
     }
   }
+
   $scope.chooseExtension = function(format) {
-    var indexOfExtension = $scope.extensions.indexOf(format)
+    var indexOfExtension = $scope.extensions.indexOf(format);
     if(indexOfExtension < 0){
       $scope.extensions.push(format);
       document.getElementById(format).style.backgroundColor = '#FF9290';
@@ -36,63 +35,61 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
       document.getElementById(format).style.backgroundColor = '#E5E5E5';
     }
     if($scope.extensions.length) {
-      $scope.extensionsPicked = 'convert to: '+$scope.extensions.join(' + ')
+      $scope.extensionsPicked = 'convert to: '+$scope.extensions.join(' + ');
     } else {
-      $scope.extensionsPicked = ' '
+      $scope.extensionsPicked = ' ';
     }
   };
 
 
+  $scope.onFileSelect = function($files) {
+    $scope.upload = [];
+    $scope.uploadResult = [];
+    $scope.selectedFiles = $files;
+    $scope.dataUrls = [];
+    var singlefileIdx = 0;
+    var $file = $files[singlefileIdx];
 
-  $scope.removeFile = function(){
+    var fileReader = new FileReader();
+    fileReader.readAsDataURL($files[singlefileIdx]);
+
+    fileReader.onload = function(e) {
+      $timeout(function() {
+        $scope.dataUrls[singlefileIdx] = e.target.result;
+
+        $scope.browseOrUpload = 'upload';
+        $scope.filename = $file.name;
+      });
+    }
+  };
+
+  $scope.start = function(index) {
+    $scope.errorMsg = null;
+    $scope.upload[index] = $upload.upload({
+      url : 'upload',
+      method: 'POST',
+      data : {
+        extensions : JSON.stringify($scope.extensions),
+      },
+      file: $scope.selectedFiles[index],
+    }).then(function(response) {
+      console.log('success!', response);
+      $scope.uploadResult.push(response.data);
+    }, function(response) {
+      console.log('error!');
+      if (response.status > 0) $scope.errorMsg = response.status + ': ' + response.data;
+    })
+  };
+
+  $scope.abort = function(index) {
+    $scope.upload[index] = null;
     $scope.browseOrUpload = 'browse';
     $scope.filename = '';
   };
 
-  $scope.$on('fileChange', function(evt, targetFile){
-    $scope.browseOrUpload = 'upload';
-    $scope.filepath = targetFile;
-
-    var arr = targetFile.split('\\');
-    $scope.filename = arr[arr.length - 1];
-
-    extensions = JSON.stringify($scope.extensions);
-    if(targetFile.files){
-      for(var i = 0; i < targetFile.files.length; i++) {
-        if(typeof targetFile.files[i] === 'object') {
-          $scope.files.push(targetFile.files[i]);
-        }
-      };
-      if($scope.fileExists){
-        postFile.upload($scope.files,extensions);
-      }
-    }
-  });
 })
 
-.directive('pdFileUpload', function(postFile){
-  return {
-    restrict: 'A',
-    template: '<input type="file" width="30px" id="hiddenFileUpload" ng-show="!filename"/>'+
-              '<input type="submit" id="submit" ng-model="fileExists" ng-value="browseOrUpload"/>',
-    link: function(scope, element, attrs) {
-
-      element.on('change', function(evt, fileName){
-        scope.$broadcast('fileChange', evt.target.value);
-        scope.$digest();
-      });
-
-      element.on('click', function(evt){
-        if(!!scope.filename) {
-          postFile.upload(scope.filepath, scope.extensions);
-        }
-      });
-
-    }
-  };
-})
-
-.service('postFile', function($http) {
+.service('postFile', function($http, $timeout, $upload) {
   return {
     upload: function(file, extensions) {
       var formData = new FormData();
@@ -112,6 +109,7 @@ angular.module('pd', ['ui.router', 'angularFileUpload'])
     }
   };
 })
+
 .service('getFileTypes', function(){
   return {
     all: {
